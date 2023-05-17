@@ -20,12 +20,29 @@ class UserRepository {
     return user;
   }
 
+  async findAll() {
+    const users = await db.query('SELECT * FROM users ORDER BY name ASC');
+
+    return users;
+  }
+
   async findByEmail(email: string) {
     const [user] = await db.query(
       `
       SELECT * FROM users WHERE email = $1
     `,
       [email],
+    );
+
+    return user;
+  }
+
+  async findById(id: string) {
+    const [user] = await db.query(
+      `
+      SELECT * FROM users WHERE id = $1
+    `,
+      [id],
     );
 
     return user;
@@ -44,3 +61,5 @@ class UserRepository {
     return user;
   }
 }
+
+export default new UserRepository();
