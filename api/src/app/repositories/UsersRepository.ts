@@ -1,27 +1,27 @@
 import db from '../../database';
 
 type User = {
-  name: string;
+  username: string;
   email: string;
   password: string;
 };
 
 class UserRepository {
-  async create({ name, email, password }: User) {
+  async create({ username, email, password }: User) {
     const [user] = await db.query(
       `
-      INSERT INTO users (name, email, password)
+      INSERT INTO users (username, email, password)
       VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [name, email, password],
+      [username, email, password],
     );
 
     return user;
   }
 
   async findAll() {
-    const users = await db.query('SELECT * FROM users ORDER BY name ASC');
+    const users = await db.query('SELECT * FROM users ORDER BY username ASC');
 
     return users;
   }
@@ -37,6 +37,15 @@ class UserRepository {
     return user;
   }
 
+  async delete(id: string) {
+    await db.query(
+      `
+      DELETE FROM users WHERE id = $1
+    `,
+      [id],
+    );
+  }
+
   async findById(id: string) {
     const [user] = await db.query(
       `
@@ -48,14 +57,14 @@ class UserRepository {
     return user;
   }
 
-  async update(id: string, { name, email, password }: User) {
+  async update(id: string, { username, email, password }: User) {
     const [user] = await db.query(
       `
-      UPDATE users SET name = $1, email = $2, password = $3
+      UPDATE users SET username = $1, email = $2, password = $3
       WHERE id = $4
       RETURNING *
     `,
-      [name, email, password, id],
+      [username, email, password, id],
     );
 
     return user;

@@ -14,30 +14,39 @@ class UserController {
   }
 
   async create(req: Request, res: Response) {
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!name) return res.status(400).json({ error: 'Name not provided' });
+    if (!username)
+      return res.status(400).json({ error: 'Username not provided' });
 
     const userAlreadyExists = await UserRepository.findByEmail(email);
     if (userAlreadyExists)
       return res.status(400).json({ error: 'User already exists' });
 
-    const user = await UserRepository.create({ name, email, password });
-    return user;
+    const user = await UserRepository.create({ username, email, password });
+    console.log('CRIOU', user);
+    res.json(user);
   }
 
   async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-    if (!name) return res.status(400).json({ error: 'Name not provided' });
+    if (!username)
+      return res.status(400).json({ error: 'Username not provided' });
 
     const contactByEmail = await UserRepository.findByEmail(email);
     if (contactByEmail && contactByEmail.id !== id)
       return res.status(400).json({ error: 'Email already exists' });
 
-    const user = await UserRepository.update(id, { name, email, password });
-    return user;
+    const user = await UserRepository.update(id, { username, email, password });
+    res.json(user);
+  }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    await UserRepository.delete(id);
+    res.sendStatus(200);
   }
 }
 
