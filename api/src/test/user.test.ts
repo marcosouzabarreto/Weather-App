@@ -48,7 +48,5 @@ describe('UserController', () => {
     expect(res).to.have.status(200);
   });
 
-  // after(async () => {
-  // Clear db
-  // });
+  after(() => process.exit(0));
 });
