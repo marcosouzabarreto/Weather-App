@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../';
+import app from '../server';
 import { expect } from 'chai';
 
 chai.use(chaiHttp);
@@ -9,11 +9,14 @@ describe('UserController', () => {
   let userId: string;
 
   it('should create a new user', async () => {
-    const res = await chai.request(app).post('/users').send({
-      username: 'Test User',
-      email: 'testuser@example.com',
-      password: 'password',
-    });
+    const res = await chai
+      .request(app)
+      .post('/users')
+      .send({
+        username: 'Test User',
+        email: `${Date.now()}@example.com`,
+        password: 'password',
+      });
 
     expect(res).to.have.status(200);
     expect(res.body).to.have.property('id');
@@ -33,11 +36,14 @@ describe('UserController', () => {
   });
 
   it('should update a user', async () => {
-    const res = await chai.request(app).put(`/users/${userId}`).send({
-      username: 'Updated User',
-      email: 'updateduser@example.com',
-      password: 'newpassword',
-    });
+    const res = await chai
+      .request(app)
+      .put(`/users/${userId}`)
+      .send({
+        username: 'Updated User',
+        email: `${Date.now() + 1}@example.com`,
+        password: 'newpassword',
+      });
 
     expect(res).to.have.status(200);
     expect(res.body).to.have.property('username', 'Updated User');
@@ -48,5 +54,5 @@ describe('UserController', () => {
     expect(res).to.have.status(200);
   });
 
-  after(() => process.exit(0));
+  // after(() => process.exit(0));
 });
