@@ -50,7 +50,6 @@ fun WeatherDTO.toWeatherInfo(): WeatherInfo {
         val hour = if (now.minute < 30) now.hour else now.hour + 1
         it.time.hour == hour
     }
-    Log.i("weather data", weatherData.toString())
     return WeatherInfo(
         weatherDataPerDay = weatherDataMap,
         currentWeatherData = currentWeatherData

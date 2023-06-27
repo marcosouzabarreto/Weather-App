@@ -20,30 +20,30 @@ fun WeatherForecast(
     modifier: Modifier = Modifier
 ) {
     state.weatherInfo?.weatherDataPerDay?.get(0)?.let { data ->
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(
-                    text = "Hoje",
-                    fontSize = 30.sp,
-                    color = Color.White,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                LazyRow(content = {
-                    items(data) { weatherData ->
-                        HourlyWeatherDisplay(
-                            weatherData = weatherData,
-                            modifier = Modifier
-                                .height(100.dp)
-                                .padding(horizontal = 16.dp)
-                        )
-                    }
-                })
-            }
+
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = "Hoje",
+                fontSize = 30.sp,
+                color = Color.White,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            LazyRow(content = {
+                items(data) { weatherData ->
+                    HourlyWeatherDisplay(
+                        weatherData = weatherData,
+                        modifier = Modifier
+                            .height(100.dp)
+                            .padding(horizontal = 16.dp)
+                    )
+                }
+            })
         }
+
     }
 }

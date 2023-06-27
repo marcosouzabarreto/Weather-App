@@ -24,7 +24,6 @@ class WeatherViewModel @Inject constructor(
         private set
 
     fun loadWeatherInfo() {
-        Log.i("Called loadWeatherInfo", state.toString())
         viewModelScope.launch {
             state = state.copy(
                 isLoading = true,
@@ -33,7 +32,6 @@ class WeatherViewModel @Inject constructor(
             locationTracker.getCurrentLocation()?.let { location ->
                 when(val result = repository.getWeatherData(location.latitude, location.longitude)) {
                     is Resource.Success -> {
-                        Log.i("WeatherViewModel", result.data.toString())
                         state = state.copy(
                             weatherInfo = result.data,
                             isLoading = false,
@@ -41,7 +39,6 @@ class WeatherViewModel @Inject constructor(
                         )
                     }
                     is Resource.Error -> {
-                        Log.i("WeatherViewModel", result.message.toString())
                         state = state.copy(
                             weatherInfo = null,
                             isLoading = false,
