@@ -1,5 +1,6 @@
-package com.gbwa.presentation
+package com.gbwa.presentation.home
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,35 +12,39 @@ import com.gbwa.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
+@HiltViewModel
 class WeatherViewModel @Inject constructor(
-    val repository: WeatherRepository,
-    val locationTracker: LocationTracker
-) : ViewModel() {
+    private val repository: WeatherRepository,
+    private val locationTracker: LocationTracker
+): ViewModel() {
+
     var state by mutableStateOf(WeatherState())
         private set
 
     fun loadWeatherInfo() {
+        Log.i("Called loadWeatherInfo", state.toString())
         viewModelScope.launch {
             state = state.copy(
                 isLoading = true,
                 error = null
             )
             locationTracker.getCurrentLocation()?.let { location ->
-                when (val result =
-                    repository.getWeatherData(location.latitude, location.longitude)) {
+                when(val result = repository.getWeatherData(location.latitude, location.longitude)) {
                     is Resource.Success -> {
+                        Log.i("WeatherViewModel", result.data.toString())
                         state = state.copy(
-                            isLoading = false,
                             weatherInfo = result.data,
+                            isLoading = false,
                             error = null
                         )
                     }
-
                     is Resource.Error -> {
+                        Log.i("WeatherViewModel", result.message.toString())
                         state = state.copy(
-                            isLoading = false,
                             weatherInfo = null,
+                            isLoading = false,
                             error = result.message
                         )
                     }
@@ -47,8 +52,7 @@ class WeatherViewModel @Inject constructor(
             } ?: kotlin.run {
                 state = state.copy(
                     isLoading = false,
-                    weatherInfo = null,
-                    error = "Location not found"
+                    error = "Não foi possível obter a localização"
                 )
             }
         }

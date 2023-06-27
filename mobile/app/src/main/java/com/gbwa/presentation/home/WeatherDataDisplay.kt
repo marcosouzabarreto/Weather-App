@@ -1,4 +1,4 @@
-package com.gbwa.presentation
+package com.gbwa.presentation.home
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

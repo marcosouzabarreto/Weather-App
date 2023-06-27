@@ -1,5 +1,8 @@
-package com.gbwa.presentation
+package com.gbwa.presentation.home
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,12 +22,14 @@ import com.gbwa.R
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeatherCard(
     state: WeatherState,
     backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
+    Log.i("Weather Info",state.weatherInfo.toString())
     state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
             backgroundColor = backgroundColor,

@@ -1,4 +1,4 @@
-package com.gbwa.presentation
+package com.gbwa.presentation.home
 
 import com.gbwa.domain.weather.WeatherInfo
 

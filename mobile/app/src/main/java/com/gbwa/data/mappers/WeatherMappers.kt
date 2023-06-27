@@ -1,5 +1,8 @@
 package com.gbwa.data.mappers
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import com.gbwa.data.remote.WeatherDTO
 import com.gbwa.data.remote.WeatherDataDTO
 import com.gbwa.domain.util.REQUESTS_PER_DAY
@@ -14,6 +17,7 @@ private data class IndexedWeatherData(
     val data: WeatherData
 )
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun WeatherDataDTO.toWeatherDataMap(): Map<Int, List<WeatherData>> {
     return time.mapIndexed { index, time ->
         val temperature = temperatures[index]
@@ -38,6 +42,7 @@ fun WeatherDataDTO.toWeatherDataMap(): Map<Int, List<WeatherData>> {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun WeatherDTO.toWeatherInfo(): WeatherInfo {
     val weatherDataMap = weatherData.toWeatherDataMap()
     val now = LocalDateTime.now()
@@ -45,6 +50,7 @@ fun WeatherDTO.toWeatherInfo(): WeatherInfo {
         val hour = if (now.minute < 30) now.hour else now.hour + 1
         it.time.hour == hour
     }
+    Log.i("weather data", weatherData.toString())
     return WeatherInfo(
         weatherDataPerDay = weatherDataMap,
         currentWeatherData = currentWeatherData
