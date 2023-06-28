@@ -29,7 +29,7 @@ fun WeatherCard(
     backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
-    Log.i("Weather Info",state.weatherInfo.toString())
+    Log.i("WeatherCard", "WeatherCard: ${state.weatherInfo}")
     state.weatherInfo?.currentWeatherData?.let { data ->
         Card(
             backgroundColor = backgroundColor,

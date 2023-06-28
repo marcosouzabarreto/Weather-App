@@ -7,7 +7,6 @@ import com.gbwa.data.remote.WeatherApi
 import com.gbwa.domain.repository.WeatherRepository
 import com.gbwa.domain.util.Resource
 import com.gbwa.domain.weather.WeatherInfo
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 class WeatherRepositoryImplementation @Inject constructor(private val api: WeatherApi) :

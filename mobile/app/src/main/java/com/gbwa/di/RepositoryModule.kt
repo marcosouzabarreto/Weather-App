@@ -1,8 +1,6 @@
 package com.gbwa.di
 
-import com.gbwa.data.location.DefaultLocationTracker
 import com.gbwa.data.repository.WeatherRepositoryImplementation
-import com.gbwa.domain.location.LocationTracker
 import com.gbwa.domain.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
